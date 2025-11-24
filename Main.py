@@ -1,4 +1,4 @@
-from Character_Setup import Character
+from Character.Character_Setup import Character
 
 def main():
     '''
