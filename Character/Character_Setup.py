@@ -10,3 +10,7 @@ class Character:
     resilience: int
     speed: int
     intelligence: int
+    luck: int
+    level: int
+    xp: int = 0
+    

@@ -1,4 +1,5 @@
-from Character.Character_Setup import Character
+from Character.Character_Setup import *
+from Gameplay.Encounter_Generation import *
 
 def main():
     '''
@@ -29,11 +30,11 @@ def main():
 
     # Saving info to character class
     if race == "h":
-        Character(name, race, 20, 20, 20, 20, 20)
+        Character(name, race, 20, 20, 20, 20, 20, 20, 0)
     elif race == "e":
-        Character(name, race, 10, 30, 10, 20, 30)
+        Character(name, race, 10, 30, 10, 20, 30, 20, 0)
     else:
-        Character(name, race, 30, 10, 30, 10, 20)
+        Character(name, race, 30, 10, 30, 10, 20, 20, 0)
 
     print(f"\nWelcome, {name}!\n")
 
