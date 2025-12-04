@@ -1,21 +1,22 @@
 # Item class
 import random
 
+# Item is a factory class which calls one of the derived item classes depending on the chosen item type
 class Item:
-    def __init__(self, player_level):
-        self.player_level = player_level
-        self.type = self.generate_type()
-
-    def generate_type(self):
+    @classmethod
+    def create(self, player_level):
         types = ['Weapon', 'Armor', 'Potion', 'Spell']
         rand_index = types[random.randint(0, len(types))]
-        return types[rand_index]
+        rand_type = types[rand_index]
+        if rand_type == 'Weapon':
+            return Weapon(player_level)
 
 class Weapon(Item):
-    def __init__(self, name, damage):
+    def __init__(self, player_level):
         weapon_name, weapon_damage = self.generate_weapon()
         self.name = weapon_name
         self.damage = weapon_damage
+        self.player_level = player_level
 
     def generate_weapon(self):
         low_level_weapons = {'Wood Sword': 2, 'Wood Staff': 2} # Dictionary which stores weapon name (key) and damage (value)

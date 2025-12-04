@@ -1,5 +1,6 @@
 from Character.Character_Setup import *
 from Gameplay.Encounter_Generation import *
+from Character.Inventory import *
 
 def main():
     '''
