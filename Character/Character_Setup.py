@@ -12,5 +12,4 @@ class Character:
     intelligence: int
     luck: int
     level: int
-    xp: int = 0
-    
+    xp: int = 0  
