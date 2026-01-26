@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 
 @dataclass
 class Character(ABC):
-    name: str
+    character_class: str
+    name: str 
 
     @property
     def level(self) -> list[int]: # List containing [Current level, level_xp, threshold to level up]
@@ -42,18 +43,17 @@ class Character(ABC):
     # Method for taking damage
 
 # Factory for determining class
-def character_factory(character_class: str) -> Character:
-    if character_class == "Warrior":
-        return Warrior()
-    elif character_class == "Magician":
-        return Magician()
-    elif character_class == "Tank":
-        return Tank()
+def character_factory(class_choice: str, name: str) -> Character:
+    if class_choice == "Warrior":
+        return Warrior(class_choice, name)
+    elif class_choice == "Magician":
+        return Magician(class_choice, name)
+    elif class_choice == "Tank":
+        return Tank(class_choice, name)
     else:
         return None
 
 # Derived classes for each race
-@dataclass
 class Warrior(Character):
     @property
     def resistance() -> list[int]:
@@ -67,7 +67,6 @@ class Warrior(Character):
     def magic(self) -> list[int]:
         return [10, 0, 5]
     
-@dataclass
 class Magician(Character):
     @property
     def resistance() -> list[int]:
@@ -81,7 +80,6 @@ class Magician(Character):
     def magic(self) -> list[int]:
         return [20, 0, 5]
     
-@dataclass
 class Tank(Character):
     @property
     def resistance() -> list[int]:
