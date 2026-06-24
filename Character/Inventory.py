@@ -7,6 +7,7 @@ class Inventory:
         self.weapons = {}
         self.potions = {}
         self.spells = {}
+        self.gold = 0
     
     # Functions for displaying each section
     def show_armor(self):
@@ -32,3 +33,12 @@ class Inventory:
             section[item_name] += 1
         else: # Otherwise, a new entry will be added with a count of 1
             section[item_name] = 1
+
+    def get_gold(self):
+        return self.gold
+
+    def deposit_gold(self, amount):
+        self.gold += amount
+
+    def withdraw_gold(self, amount):
+        self.gold -= amount

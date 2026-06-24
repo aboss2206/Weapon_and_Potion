@@ -1,6 +1,7 @@
 from Character.Character_Attributes import *
 from Gameplay.Encounter_Generation import *
 from Character.Inventory import *
+from Character.Player_Options import *
 import random
 
 def main(test_mode=False):
@@ -45,24 +46,41 @@ def main(test_mode=False):
         else:
             player_class = "Tank"
             print("You're a Tough Tank!")
-    player_traits = character_factory(player_class, player_name)
+    player = character_factory(player_class, player_name)
 
     # Starting game
     game_continue = True
     print("\n-- GAME START --")
     count = 1
     while game_continue:
-        print(f"\n- Encounter {count} -")
-        encounter = encounter_generator(random.randint(1, 5))
-        print(encounter)
-        print('\n- Your Turn -\nWhat do you wanna do?\n')
-        count += 1
-        game_continue = input("Continue playing? (Enter 'y' or 'n'): ")
-        while game_continue not in {'y', 'n'}:
-            game_continue = input("Enter 'y' or 'n': ")
-        if game_continue == 'n':
-            print('\n-- GAME END --\nThanks for playing!\n')
-            break
+        # n = random.randint(1, 4)
+        n = 2
+        encounter = encounter_generator(n)
+        if encounter:
+            print(f"\n|- Encounter {count} -|")
+            if n == 2:
+                print(encounter[0])
+            else:
+                print(encounter)
+            print(encounter)
+            if n != 1: # 1 == Just Walking
+                print('- Your Turn -\nWhat do you wanna do?')
+                if n == 2: # Combat encounter
+                    combat_encounter(player, encounter[1])
+                if n == 3: # Chest
+                    chest_encounter(player)
+                if n == 4: # Tavern
+                    tavern_encounter(player)
+            count += 1
+
+            game_continue = input("\nContinue playing? (Enter 'y' or 'n'): ")
+            while game_continue not in {'y', 'n'}:
+                game_continue = input("Enter 'y' or 'n': ")
+            if game_continue == 'n':
+                print('\n-- GAME END --\nThanks for playing!\n')
+                break
+        else:
+            continue
 
 if __name__ == "__main__":
     main(test_mode=True)
