@@ -6,7 +6,6 @@ def encounter_generator(n):
     # Event 1: Just Walking
     if n == 1:
         event = "Walking..."
-        event_label = "Walking"
     # Event 2: Encountered an enemy
     elif n == 2:
         enemy_type = enemy_encounter_generator()

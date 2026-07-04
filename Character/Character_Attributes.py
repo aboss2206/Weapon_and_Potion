@@ -4,29 +4,14 @@ from abc import ABC, abstractmethod
 
 @dataclass
 class Character(ABC):
-    character_class: str
-    name: str 
-    total_health: int
-    current_health: int # For combat
-
-    @property
-    def level(self) -> list[int]: # List containing [Current level, level_xp, threshold to level up]
-        return [0, 0, 10]
-    
-    @property
-    @abstractmethod
-    def resistance(self) -> list[int]:
-        pass
-
-    @property
-    @abstractmethod
-    def strength(self) -> list[int]:
-        pass
-    
-    @property
-    @abstractmethod
-    def magic(self) -> list[int]:
-        pass
+    def __init__(self):
+        self.level, self.level_xp, self.level_up_threshold = 1, 0, 10
+        self.resistance, self.resistance_xp, self.resistance_threshold = 0, 0, 0
+        self.strength, self.strength_xp, self.strength_threshold = 0, 0, 0
+        self.magic, self.magic_xp, self.magic_threshold = 0, 0, 0
+        self.health = 0
+        self.current_health = self.health
+        self.character_class = "Not defined"
 
     # Method for adding xp to a certain skill
     def add_xp(self, skill, xp_amount):
@@ -38,9 +23,9 @@ class Character(ABC):
 
     # Method for leveling up main level and skills
     def level_up(self, skill_or_level): # Skill can be either
-        self.skill_or_level[0] += 1 # current level increases
-        self.skill_or_level[1] = 0 # xp reset to 0
-        self.skill_or_level[2] += 1 # xp threshold for next level increases
+        self.skill_or_level += 1 # current level increases
+        self.skill_or_level = 0 # xp reset to 0
+        self.skill_or_level += 1 # xp threshold for next level increases
 
     # Method for taking damage
     def take_damage(self, damage):
@@ -65,53 +50,58 @@ class Character(ABC):
             self.level[1] -= 1
             self.level[2] -= 1 # Threshold for leveling reduced to match previous level
 
+    # Method for displaying character stats
+    def show_stats(self):
+        print('-----------')
+        print(f'Name: {self.name}')
+        print(f'Class: {self.character_class}')
+        print(f'Level: {self.level}')
+        print(f"Resistance: {self.resistance}")
+        print(f"Strength: {self.strength}")
+        print(f"Magic: {self.magic}")
+        print('-----------')
+
 # Factory for determining class
 def character_factory(class_choice: str, name: str) -> Character:
     if class_choice == "Warrior":
-        return Warrior(class_choice, name, total_health=100, current_health=100)
+        return Warrior(name)
     elif class_choice == "Magician":
-        return Magician(class_choice, name, total_health=90, current_health=90)
+        return Magician(name)
     elif class_choice == "Tank":
-        return Tank(class_choice, name, total_health=110, current_health=110)
+        return Tank(name)
     else:
         return None
 
-# Derived classes for each race
+# Derived classes for each character class
 class Warrior(Character):
-    @property
-    def resistance(self) -> list[int]:
-        return [15, 0, 5]
-    
-    @property
-    def strength(self) -> list[int]:
-        return [20, 0, 5]
-    
-    @property
-    def magic(self) -> list[int]:
-        return [10, 0, 5]
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.character_class = "Warrior"
+        self.health = 100
+        self.current_health = self.health
+        self.resistance = 15
+        self.strength = 20
+        self.magic = 10
     
 class Magician(Character):
-    @property
-    def resistance() -> list[int]:
-        return [15, 0, 5]
-    
-    @property
-    def strength(self) -> list[int]:
-        return [10, 0, 5]
-    
-    @property
-    def magic(self) -> list[int]:
-        return [20, 0, 5]
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.character_class = "Magician"
+        self.health = 90
+        self.current_health = self.health
+        self.resistance = 15
+        self.strength = 10
+        self.magic = 20
     
 class Tank(Character):
-    @property
-    def resistance() -> list[int]:
-        return [20, 0, 5]
-    
-    @property
-    def strength(self) -> list[int]:
-        return [15, 0, 5]
-    
-    @property
-    def magic(self) -> list[int]:
-        return [10, 0, 5]
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.character_class = "Warrior"
+        self.health = 110
+        self.current_health = self.health
+        self.resistance = 20
+        self.strength = 15
+        self.magic = 10

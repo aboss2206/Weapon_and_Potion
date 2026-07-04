@@ -7,4 +7,3 @@ for i in range(10):
     n = random.randrange(1, 5)
     encounter = encounter_generator(n)
     print(encounter)
-

@@ -2,7 +2,6 @@ from Character.Character_Attributes import *
 from Gameplay.Encounter_Generation import *
 from Character.Inventory import *
 from Character.Player_Options import *
-import random
 
 def main(test_mode=False):
     if test_mode:
@@ -49,38 +48,45 @@ def main(test_mode=False):
     player = character_factory(player_class, player_name)
 
     # Starting game
-    game_continue = True
-    print("\n-- GAME START --")
+    print('\n-----------------------------------------')
+    print("--------       GAME START       ---------")
+    print("-----------------------------------------\n")
     count = 1
-    while game_continue:
-        # n = random.randint(1, 4)
-        n = 2
+    player_response = None
+    while True:
+        # Generating and printing encounter
+        n = 1
         encounter = encounter_generator(n)
-        if encounter:
-            print(f"\n|- Encounter {count} -|")
-            if n == 2:
-                print(encounter[0])
-            else:
-                print(encounter)
-            print(encounter)
-            if n != 1: # 1 == Just Walking
-                print('- Your Turn -\nWhat do you wanna do?')
-                if n == 2: # Combat encounter
-                    combat_encounter(player, encounter[1])
-                if n == 3: # Chest
-                    chest_encounter(player)
-                if n == 4: # Tavern
-                    tavern_encounter(player)
-            count += 1
-
-            game_continue = input("\nContinue playing? (Enter 'y' or 'n'): ")
-            while game_continue not in {'y', 'n'}:
-                game_continue = input("Enter 'y' or 'n': ")
-            if game_continue == 'n':
-                print('\n-- GAME END --\nThanks for playing!\n')
+        print(encounter)
+        print('\n------------')
+        print('Your Options')
+        print('------------')
+        # Walking
+        if n == 1: 
+            print("\'s\': check stats, \'q\': quit")
+            player_response = input("Enter option: ")
+            while player_response not in "sq":
+                player_response = input("Enter either \'s\'(check stats) or \'q\'(quit): ")
+            if player_response == 's':
+                print()
+                print('Your Stats')
+                player.show_stats()
+                print()
+            elif player_response == 'q':
                 break
-        else:
-            continue
+
+        # Chest
+        elif n == 3:
+            print("\'o\': open, \'w\': leave it, \'q\': quit")
+            player_response = input("Enter option: ")
+            while player_response not in "owq":
+                player_response = input("Enter either \'o\'(open chest), \'l\'(leave chest) or \'q\'(quit): ")
+
+    print('\n-----------------------------------------')
+    print("------     THANKS FOR PLAYING!   --------")
+    print("-----------------------------------------\n")
+    print('Final Stats')
+    player.show_stats()
 
 if __name__ == "__main__":
     main(test_mode=True)
