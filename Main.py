@@ -1,7 +1,8 @@
 from Character.Character_Attributes import *
 from Gameplay.Encounter_Generation import *
-from Character.Inventory import *
+from Items.Inventory import *
 from Character.Player_Options import *
+from Items.Chest import *
 
 def main(test_mode=False):
     if test_mode:

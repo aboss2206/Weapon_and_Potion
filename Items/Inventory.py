@@ -1,7 +1,9 @@
 # Class for showing the player's inventory
 
+from Items.Item_types import Weapon, Armor, Potion, Spell
+
 class Inventory:
-    # Dictionaries to hold the different item categories
+    # Dictionaries to hold the different item categories (Item name: Quantity)
     def __init__(self):
         self.armor = {}
         self.weapons = {}
@@ -28,11 +30,12 @@ class Inventory:
         for key, value in self.potions.items():
                 print(f"{key} ({value})\n")
 
-    def update_inventory(self, item_name, section):
-        if item_name in section: # If item (key) is present, the item count (value) will be incremented
-            section[item_name] += 1
-        else: # Otherwise, a new entry will be added with a count of 1
-            section[item_name] = 1
+    def update_inventory(self, item_obj):
+        if isinstance(item_obj, Weapon):
+            if item_obj.name in self.weapons: # If item (key) is present, the item count (value) will be incremented
+                self.weapons[item_obj] += 1
+            else: # Otherwise, a new entry will be added with a count of 1
+                self.weapons[item_obj] = 1
 
     def get_gold(self):
         return self.gold
