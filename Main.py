@@ -1,7 +1,7 @@
-from Character.Character_Attributes import *
-from Gameplay.Encounter_Generation import *
-from Items.Inventory import *
-from Character.Player_Options import *
+from Character.Character_Attributes import Character, character_factory, Warrior, Magician, Tank
+from Gameplay.Encounter_Generation import encounter_generator, enemy_encounter_generator
+from Items.Inventory import Inventory
+from Gameplay.Combat_Encounter import combat_encounter, chest_encounter
 from Items.Chest import *
 
 def main(test_mode=False):
@@ -46,7 +46,10 @@ def main(test_mode=False):
         else:
             player_class = "Tank"
             print("You're a Tough Tank!")
-    player = character_factory(player_class, player_name)
+
+    # Initialising player traits and inventory
+    player_traits = character_factory(player_class, player_name)
+    player_inventory = Inventory()
 
     # Starting game
     print('\n-----------------------------------------')
@@ -71,23 +74,25 @@ def main(test_mode=False):
             if player_response == 's':
                 print()
                 print('Your Stats')
-                player.show_stats()
+                player_traits.show_stats()
                 print()
             elif player_response == 'q':
                 break
-
         # Chest
         elif n == 3:
             print("\'o\': open, \'w\': leave it, \'q\': quit")
             player_response = input("Enter option: ")
             while player_response not in "owq":
                 player_response = input("Enter either \'o\'(open chest), \'l\'(leave chest) or \'q\'(quit): ")
+            if player_response == 'o':
+                print()
+            
 
     print('\n-----------------------------------------')
     print("------     THANKS FOR PLAYING!   --------")
     print("-----------------------------------------\n")
     print('Final Stats')
-    player.show_stats()
+    player_traits.show_stats()
 
 if __name__ == "__main__":
     main(test_mode=True)

@@ -17,7 +17,7 @@ class Weapon:
         med_level_weapons = low_level_weapons + {'Iron Sword': (4, 'P'), 
                                                  'Iron Staff': (4, 'M')}
         high_level_weapons = med_level_weapons + {'Steel Sword': (6, 'P'), 
-                                                  'Steef Staff': (6, 'M')}
+                                                  'Steel Staff': (6, 'M')}
 
         weapon_name, weapon_attack = None, None
         if self.player_level <= 5:
