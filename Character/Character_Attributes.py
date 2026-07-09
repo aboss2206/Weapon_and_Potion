@@ -12,6 +12,8 @@ class Character(ABC):
         self.health = 0
         self.current_health = self.health
         self.character_class = "Not defined"
+        self.kill_count = 0
+        self.encounter_count = 0
 
     # Method for adding xp to a certain skill
     def add_xp(self, skill, xp_amount):
@@ -59,6 +61,8 @@ class Character(ABC):
         print(f"Resistance: {self.resistance}")
         print(f"Strength: {self.strength}")
         print(f"Magic: {self.magic}")
+        print(f"Encounters: {self.encounter_count}")
+        print(f"Kill Count: {self.kill_count}")
         print('-----------')
 
 # Factory for determining class

@@ -73,7 +73,7 @@ class Potion:
         large_potions = medium_potions | {'Large Health Potion': (6, 'H'), 
                                           'Large Energy Potion': (6, 'E'), 
                                           'Large Magic Potion': (6, 'M')} 
-        potion_name, potion_effects = None
+        potion_name, potion_effects = None, None
         if level <= 5:
             potion_name, potion_effects = random_dict_item(small_potions)
         elif level > 5 and level < 10:

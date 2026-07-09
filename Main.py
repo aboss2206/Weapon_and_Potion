@@ -57,12 +57,17 @@ def main(test_mode=False):
     print('\n-----------------------------------------')
     print("--------       GAME START       ---------")
     print("-----------------------------------------\n")
-    count = 1
+    count = 0
     player_response = None
     while True:
         # Generating and printing encounter
         n = 3 #random.randint(1, 5)
         encounter = encounter_generator(n)
+        if n != 1:
+            player_traits.encounter_count += 1
+            print("\n------------")
+            print(f"Encounter {player_traits.encounter_count}")
+            print("-------------\n")
         print(encounter)
         print('\n------------')
         print('Your Options')
@@ -80,26 +85,22 @@ def main(test_mode=False):
                 print()
             elif player_response == 'q':
                 break
-
-        # Combat
-        # elif n == 2:
-            
         # Chest
-        elif n == 3:
-            print("\'o\': open, \'w\': leave it, \'q\': quit")
-            player_response = input("Enter option: ")
-            while player_response not in "owq":
-                player_response = input("Enter either \'o\'(open chest), \'l\'(leave chest) or \'q\'(quit): ")
-            if player_response == 'o':
-                new_item = chest(player_inventory, player_traits)
-                if isinstance(new_item, Weapon) or isinstance(new_item, Armor) or isinstance(new_item, Potion) or isinstance(new_item, Spell):
-                    print(f"New item: {new_item.get_name()}")
-                else: # Gold
-                    print(f"New item: {new_item}")
-            elif player_response == 'l':
-                print("Yeah, f#!@ that chest.")
-            elif player_response == 'q':
-                break
+        if n == 3:
+                print("\'o\': open, \'w\': leave it, \'q\': quit")
+                player_response = input("Enter option: ")
+                while player_response not in "owq":
+                    player_response = input("Enter either \'o\'(open chest), \'l\'(leave chest) or \'q\'(quit): ")
+                if player_response == 'o':
+                    new_item = chest(player_inventory, player_traits)
+                    if isinstance(new_item, Weapon) or isinstance(new_item, Armor) or isinstance(new_item, Potion) or isinstance(new_item, Spell):
+                        print(f"\nNew item: {new_item.get_name()}")
+                    else: # Gold
+                        print(f"\nNew item: {new_item}")
+                elif player_response == 'l':
+                    print("Yeah, f#!@ that chest.")
+                elif player_response == 'q':
+                    break
 
     print('\n-----------------------------------------')
     print("------     THANKS FOR PLAYING!   --------")
