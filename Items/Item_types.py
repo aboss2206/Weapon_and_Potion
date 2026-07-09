@@ -27,6 +27,9 @@ class Weapon:
         else:
             weapon_name, weapon_attack = random_dict_item(high_level_weapons)
         return weapon_name, weapon_attack
+    
+    def get_name(self):
+        return self.name
         
 class Armor:
     def __init__(self, player_level):
@@ -50,11 +53,14 @@ class Armor:
             armor_name, armor_defence = random_dict_item(high_level_armor)
         return armor_name, armor_defence
     
+    def get_name(self):
+        return self.name
+    
 class Potion:
     def __init__(self, player_level):
         self.player_level = player_level
         name, (restoration_amount, restoration_type) = self.generate_potion()
-        self.potion_name, self.restoration_amount, self.restoration_type = name, restoration_amount, restoration_type
+        self.name, self.restoration_amount, self.restoration_type = name, restoration_amount, restoration_type
 
     def generate_potion(self):
         level = self.player_level
@@ -75,6 +81,9 @@ class Potion:
         else:
             potion_name, potion_effects = random_dict_item(large_potions)
         return potion_name, potion_effects
+    
+    def get_name(self):
+        return self.name
     
 class Spell:
     def __init__(self, player_level):
@@ -102,3 +111,6 @@ class Spell:
         else:
             spell_name, spell_stats = random_dict_item(major_spells)
         return spell_name, spell_stats
+    
+    def get_name(self):
+        return self.name

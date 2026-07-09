@@ -1,8 +1,9 @@
 from Character.Character_Attributes import Character, character_factory, Warrior, Magician, Tank
 from Gameplay.Encounter_Generation import encounter_generator, enemy_encounter_generator
 from Items.Inventory import Inventory
-from Gameplay.Combat_Encounter import combat_encounter, chest_encounter
-from Items.Chest import *
+from Gameplay.Combat_Encounter import combat_encounter
+from Items.Chest import chest
+from Items.Item_types import Weapon, Armor, Potion, Spell
 
 def main(test_mode=False):
     if test_mode:
@@ -85,8 +86,15 @@ def main(test_mode=False):
             while player_response not in "owq":
                 player_response = input("Enter either \'o\'(open chest), \'l\'(leave chest) or \'q\'(quit): ")
             if player_response == 'o':
-                print()
-            
+                new_item = chest(player_inventory, player_traits)
+                if isinstance(new_item, Weapon) or isinstance(new_item, Armor) or isinstance(new_item, Potion) or isinstance(new_item, Spell):
+                    print(f"New item: {new_item.get_name()}")
+                else: # Gold
+                    print(f"New item: {new_item}")
+            elif player_response == 'l':
+                print("Yeah, f#!@ that chest.")
+            elif player_response == 'q':
+                break
 
     print('\n-----------------------------------------')
     print("------     THANKS FOR PLAYING!   --------")

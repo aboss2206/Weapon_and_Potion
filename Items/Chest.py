@@ -24,4 +24,4 @@ def chest(player_inventory, player_traits):
     else: 
         gold_amount = random.randrange(1, 20) # Random amount of gold
         player_inventory.deposit_gold(gold_amount) 
-        return gold_amount
+        return f"{gold_amount} Gold"
