@@ -4,6 +4,7 @@ from Items.Inventory import Inventory
 from Gameplay.Combat_Encounter import combat_encounter
 from Items.Chest import chest
 from Items.Item_types import Weapon, Armor, Potion, Spell
+import random
 
 def main(test_mode=False):
     if test_mode:
@@ -60,7 +61,7 @@ def main(test_mode=False):
     player_response = None
     while True:
         # Generating and printing encounter
-        n = 1
+        n = 3 #random.randint(1, 5)
         encounter = encounter_generator(n)
         print(encounter)
         print('\n------------')
@@ -79,6 +80,10 @@ def main(test_mode=False):
                 print()
             elif player_response == 'q':
                 break
+
+        # Combat
+        # elif n == 2:
+            
         # Chest
         elif n == 3:
             print("\'o\': open, \'w\': leave it, \'q\': quit")

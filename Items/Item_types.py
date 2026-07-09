@@ -14,9 +14,9 @@ class Weapon:
         # Dictionary which stores (weapon name: (damage, damage type)) where P = Physical, M = Magical
         low_level_weapons = {'Wood Sword': (2, 'P'), 
                              'Wood Staff': (2, 'M')} 
-        med_level_weapons = low_level_weapons + {'Iron Sword': (4, 'P'), 
+        med_level_weapons = low_level_weapons | {'Iron Sword': (4, 'P'), 
                                                  'Iron Staff': (4, 'M')}
-        high_level_weapons = med_level_weapons + {'Steel Sword': (6, 'P'), 
+        high_level_weapons = med_level_weapons | {'Steel Sword': (6, 'P'), 
                                                   'Steel Staff': (6, 'M')}
 
         weapon_name, weapon_attack = None, None
@@ -41,8 +41,8 @@ class Armor:
         level = self.player_level
         # Dictionary which stores: [armor name: (physical defence, magical defence)]
         low_level_armor = {'Silk Armor': 2} 
-        med_level_armor = low_level_armor + {'Iron Armor': 4}
-        high_level_armor = med_level_armor + {'Steel Armor': 6}
+        med_level_armor = low_level_armor | {'Iron Armor': 4}
+        high_level_armor = med_level_armor | {'Steel Armor': 6}
         armor_name, armor_defence = None, None
 
         if level <= 5:
@@ -67,10 +67,10 @@ class Potion:
         small_potions = {'Small Health Potion': (2, 'H'), 
                          'Small Energy Potion': (2, 'E'), 
                          'Small Magic Potion': (2, 'M')} 
-        medium_potions = small_potions + {'Medium Health Potion': (4, 'H'), 
+        medium_potions = small_potions | {'Medium Health Potion': (4, 'H'), 
                                           'Medium Energy Potion': (4, 'E'), 
                                           'Medium Magic Potion': (4, 'M')} 
-        large_potions = medium_potions + {'Large Health Potion': (6, 'H'), 
+        large_potions = medium_potions | {'Large Health Potion': (6, 'H'), 
                                           'Large Energy Potion': (6, 'E'), 
                                           'Large Magic Potion': (6, 'M')} 
         potion_name, potion_effects = None
@@ -97,12 +97,12 @@ class Spell:
         minor_spells = {'Minor Health Spell': (2, 'D'), 'Minor Energy Spell': (2, 'D'), 
                         'Minor Magic Restoration Spell': (2, 'D'), 'Minor Damage Spell': (2, 'O'), 
                         'Minor Fatigue Spell': (2, 'O'), 'Minor Magic Drain Spell': (2, 'D')}
-        modest_spells = {'Modest Health Spell': (4, 'D'), 'Modest Energy Spell': (4, 'D'), 
-                         'Modest Magic Restoration Spell': (4, 'D'), 'Modest Damage Spell': (4, 'O'), 
-                         'Modest Fatigue Spell': (4, 'O'), 'Modest Magic Drain Spell': (4, 'D')}
-        major_spells = {'Major Health Spell': (6, 'D'), 'Major Energy Spell': (6, 'D'), 'Major Magic Restoration Spell': (6, 'D'),
-                        'Major Damage Spell': (6, 'O'), 'Major Fatigue Spell': (6, 'O'), 'Major Magic Drain Spell': (6, 'D')}
-        
+        modest_spells = minor_spells | {'Modest Health Spell': (4, 'D'), 'Modest Energy Spell': (4, 'D'), 
+                                        'Modest Magic Restoration Spell': (4, 'D'), 'Modest Damage Spell': (4, 'O'), 
+                                        'Modest Fatigue Spell': (4, 'O'), 'Modest Magic Drain Spell': (4, 'D')}
+        major_spells = modest_spells | {'Major Health Spell': (6, 'D'), 'Major Energy Spell': (6, 'D'), 
+                                        'Major Magic Restoration Spell': (6, 'D'), 'Major Damage Spell': (6, 'O'), 
+                                        'Major Fatigue Spell': (6, 'O'), 'Major Magic Drain Spell': (6, 'D')}
         spell_name, spell_stats = None, None
         if level <= 5:
             spell_name, spell_stats = random_dict_item(minor_spells)
