@@ -1,5 +1,5 @@
 import random
-from Items.Inventory import Inventory
+from Character.Inventory import Inventory
 from Character.Character_Attributes import Character
 from Items.Item_types import random_dict_item, Weapon, Armor, Potion, Spell
 

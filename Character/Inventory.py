@@ -1,5 +1,4 @@
 # Class for showing the player's inventory
-
 from Items.Item_types import Weapon, Armor, Potion, Spell
 
 class Inventory:
