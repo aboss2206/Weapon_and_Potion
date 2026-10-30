@@ -14,7 +14,7 @@ def encounter_generator(n):
             event = f"Oh no! You've encountered an {enemy_type}! What do you want to do?"
         else:
             event = f"Oh no! You've encountered a {enemy_type}! What do you want to do?"
-        return event
+        return event, enemy_type
     # Event 3: Found a chest
     elif n == 3: 
         event = "You found a chest! Wanna open it?"
@@ -29,7 +29,7 @@ def enemy_encounter_generator():
     if n == 1:
         enemy_type = "Necromancer"
     elif n == 2:
-        enemy_type = "Bandit"
+        enemy_type = "Brigand"
     elif n == 3:
         enemy_type = "Dragon"
     elif n == 4:

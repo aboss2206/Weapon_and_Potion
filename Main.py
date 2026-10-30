@@ -68,9 +68,10 @@ def main(test_mode=False):
             print("\n-----------")
             print(f"Encounter {player_traits.encounter_count}")
             print("-----------")
-        print()
+        else:
+            print('\n-----------')
         print(encounter)
-        print('------------')
+        print('-----------')
         print('Your Options:')
         # Walking
         if n == 1: 
@@ -79,9 +80,11 @@ def main(test_mode=False):
             while player_response not in "csq":
                 player_response = input("Enter either \'s\'(check stats) or \'q\'(quit): ")
             if player_response == 'c':
+                print("-----------")
                 print('A few moments later...')
+                print("-----------")
             if player_response == 's':
-                print()
+                print("-----------")
                 print('Your Stats')
                 player_traits.show_stats()
             elif player_response == 'q':
@@ -89,6 +92,22 @@ def main(test_mode=False):
         # Enemy
         elif n == 2:
             print("\'f\': fight, \'r\': run, \'q\': quit")
+            player_response = input("Enter option: ")
+            while player_response not in "frq":
+                player_response = input("Enter either \'f\'(fight), \'r\'(run) or \'q\'(quit): ")
+            if player_response == 'f':
+                print("-- FIGHT TIME --")
+                if "Necromancer" in encounter:
+                    enemy_type = "Necromancer"
+                elif "Brigand" in encounter:
+                    enemy_type = "Brigand"
+                elif "Dragon" in encounter:
+                    enemy_type = "Dragon"
+                elif "Zombie" in encounter:
+                    enemy_type = "Zombie"
+                else:
+                    enemy_type = "Assassin"
+                combat_encounter(player_traits, player_inventory, enemy_type)
         # Chest
         elif n == 3:
                 print("\'o\': open, \'l': leave it, \'q\': quit")
@@ -98,11 +117,17 @@ def main(test_mode=False):
                 if player_response == 'o':
                     new_item = chest(player_inventory, player_traits)
                     if isinstance(new_item, Weapon) or isinstance(new_item, Armor) or isinstance(new_item, Potion) or isinstance(new_item, Spell):
-                        print(f"\nNew item: {new_item.get_name()}")
+                        print("-----------")
+                        print(f"NEW ITEM: {new_item.get_name()}")
+                        print("-----------")
                     else: # Gold
-                        print(f"\nNew item: {new_item}")
+                        print("-----------")
+                        print(f"NEW ITEM: {new_item}")
+                        print("-----------")
                 elif player_response == 'l':
+                    print("-----------")
                     print("Yeah, f#!@ that chest.")
+                    print("-----------")
                 else:
                     break
         # Tavern
@@ -112,13 +137,29 @@ def main(test_mode=False):
             while player_response not in "rcq":
                 player_response = input("Enter either \'r\'(rest), \'c\'(continue) or \'q\'(quit): ")
             while player_response == 'r' and player_inventory.gold < 10:
-                player_response = input("Insufficient gold, enter another option: ")
+                print("-----------")
+                player_response = input(f"Insufficient gold (You have {player_inventory.get_gold()} gold), enter another option: ")
             if player_response == 'r':
-                if player_traits.current_health != player_traits.health:
+                if player_traits.current_health == player_traits.health:
+                    print("-----------")
+                    player_response = input(f"Are you sure? Your health is full so it won't do shit (y or n): ")
+                    if player_response == 'y':
+                        print("-----------")
+                        print("You take a well-deserved, arguably unnecessary, break!")
+                        print("-----------")
+                    else:
+                        print("-----------")
+                        print("Good idea, maybe later")
+                        print("-----------")
+                else:
                     player_inventory.withdraw_gold(10)
+                    print("-----------")
                     print("Health fully restored!")
+                    print("-----------")
             elif player_response == 'c':
+                print("-----------")
                 print("Yeah, taverns are overrated")
+                print("-----------")
             else:
                 break
 

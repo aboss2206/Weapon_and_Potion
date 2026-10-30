@@ -14,10 +14,6 @@ class Enemy(ABC):
         pass
 
     @abstractmethod
-    def encounter(self):
-        pass
-
-    @abstractmethod
     def attack(self):
         pass
 
@@ -28,8 +24,8 @@ class Enemy(ABC):
 def Enemy_factory(kind: str) -> Enemy:
     if kind == "Zombie":
         return Zombie()
-    elif kind == "Bandit":
-        return Bandit()
+    elif kind == "Brigand":
+        return Brigand()
     elif kind == "Assassin":
         return Assassin()
     elif kind == "Necromancer":
@@ -46,24 +42,18 @@ class Zombie(Enemy):
     def damage() -> int:
         return 2
 
-    def encounter(self):
-        print("A Zombie drags itself into view!")
-
     def attack(self):
         print("The Zombie attacks you!")
 
-class Bandit(Enemy):
+class Brigand(Enemy):
     def health() -> int:
         return 10
     
     def damage() -> int:
         return 4
 
-    def encounter(self):
-        print("A Bandit, with a battle cry, blocks your path!")
-
     def attack(self):
-        print("The Bandit strikes at you with their sword!")
+        print("The Brigand strikes at you with their sword!")
 
 class Assassin(Enemy):
     def health() -> int:
@@ -71,9 +61,6 @@ class Assassin(Enemy):
 
     def damage() -> int:
         return 6
-
-    def encounter(self):
-        print("An Assassin flips into view from around the corner")
 
     def attack(self):
         print("The Assassin lunges at you with their daggers!")
@@ -85,9 +72,6 @@ class Necromancer(Enemy):
     def damage() -> int:
         return 8
 
-    def encounter(self):
-        print("A figure steps through a portal created in front of you. It's a Necromancer!")
-
     def attack(self):
         print("The Necromancer casts a spell on you!")
 
@@ -97,9 +81,6 @@ class Dragon(Enemy):
     
     def damage() -> int:
         return 12
-
-    def encounter(self):
-        print("A Dragon flies into view!")
 
     def attack(self):
         print("The Dragon blows fire at you!")

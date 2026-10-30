@@ -7,26 +7,44 @@ def random_dict_item(dict):
 class Weapon:
     def __init__(self, player_level):
         self.player_level = player_level
-        name, (damage, damage_type) = self.generate_weapon()
-        self.name, self.damage, self.damage_type = name, damage, damage_type
+        name, damage_info = self.generate_weapon()
+        self.name = name
+        self.damage = damage_info
 
     def generate_weapon(self):
         # Dictionary which stores (weapon name: (damage, damage type)) where P = Physical, M = Magical
-        low_level_weapons = {'Wood Sword': (2, 'P'), 
-                             'Wood Staff': (2, 'M')} 
-        med_level_weapons = low_level_weapons | {'Iron Sword': (4, 'P'), 
-                                                 'Iron Staff': (4, 'M')}
-        high_level_weapons = med_level_weapons | {'Steel Sword': (6, 'P'), 
-                                                  'Steel Staff': (6, 'M')}
+        low_level_weapons = {'Wood Sword': {
+                                'Physical Damage': 2,
+                                'Magical Damage': 1}, 
+                             'Wood Staff': {
+                                'Physical Damage': 1, 
+                                'Magical Damage': 2}
+                            } 
+        med_level_weapons = low_level_weapons | {
+                            'Iron Sword': {
+                                'Damage': 4,
+                                'Damage type': 'P'}, 
+                             'Wood Staff': {
+                                'Damage': 4, 
+                                'Damage type': 'M'}
+                            } 
+        high_level_weapons = med_level_weapons | {
+                            'Steel Sword': {
+                                'Damage': 6,
+                                'Damage type': 'P'}, 
+                             'Steel Staff': {
+                                'Damage': 6, 
+                                'Damage type': 'M'}
+                            } 
 
-        weapon_name, weapon_attack = None, None
+        weapon_name, weapon_damage = None, None
         if self.player_level <= 5:
-            weapon_name, weapon_attack = random_dict_item(low_level_weapons)
+            weapon_name, weapon_damage = random_dict_item(low_level_weapons)
         elif self.player_level > 5 and self.player_level < 10:
-            weapon_name, weapon_attack = random_dict_item(med_level_weapons)
+            weapon_name, weapon_damage = random_dict_item(med_level_weapons)
         else:
-            weapon_name, weapon_attack = random_dict_item(high_level_weapons)
-        return weapon_name, weapon_attack
+            weapon_name, weapon_damage = random_dict_item(high_level_weapons)
+        return weapon_name, weapon_damage
     
     def get_name(self):
         return self.name
@@ -35,16 +53,37 @@ class Armor:
     def __init__(self, player_level):
         self.player_level = player_level
         armor_name, armor_defence = self.generate_armor()
-        self.name, self.defence = armor_name, armor_defence
+        self.name = armor_name
+        self.physical_defence = armor_defence['Physical Defence']
+        self.magical_defence = armor_defence['Magical Defence']
 
     def generate_armor(self):
         level = self.player_level
         # Dictionary which stores: [armor name: (physical defence, magical defence)]
-        low_level_armor = {'Silk Armor': 2} 
-        med_level_armor = low_level_armor | {'Iron Armor': 4}
-        high_level_armor = med_level_armor | {'Steel Armor': 6}
+        low_level_armor = {'Silk Armor': {
+                                'Physical Defence': 2,
+                                'Magical Defence': 1},
+                            'Simple Robes': {
+                                'Physical Defence': 1,
+                                'Magical Defence': 2}
+                            }
+        med_level_armor = low_level_armor | {
+                            'Iron Armor': {
+                                'Physical Defence': 4,
+                                'Magical Defence': 2},
+                            'Student\'s Robes': {
+                                'Physical Defence': 2,
+                                'Magical Defence': 4}
+                            }
+        high_level_armor = med_level_armor | {
+                            'Steel Armor': {
+                                'Physical Defence': 6,
+                                'Magical Defence': 3},
+                            'Magician\'s Robes': {
+                                'Physical Defence': 3,
+                                'Magical Defence': 6}
+                            }
         armor_name, armor_defence = None, None
-
         if level <= 5:
             armor_name, armor_defence = random_dict_item(low_level_armor)
         elif level > 5 and level < 10:
