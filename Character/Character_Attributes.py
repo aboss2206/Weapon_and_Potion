@@ -17,21 +17,49 @@ class Character(ABC):
 
     # Method for adding xp to a certain skill
     def add_xp(self, skill, xp_amount):
-        new_xp_amount = self.skill[1] + xp_amount # Current + new xp
-        if new_xp_amount > self.skill[2]: # Checking if the player can level up
-            self.level_up(skill)
-            excess_xp = new_xp_amount - self.skill[2] # The amount of extra xp that would go towards next level
-            self.skill[1] = excess_xp # Excess xp is added to new level
+        if skill == "strength":
+            new_xp_amount = self.strength_xp + xp_amount # Current + new xp
+            if new_xp_amount > self.strength_threshold: # Checking if the player can level up
+                excess_xp = new_xp_amount - self.strength_threshold # The amount of extra xp that would go towards next level
+                self.level_up(skill)
+            self.strength_xp = excess_xp # Excess xp is added to new level
+        elif skill == "resistance":
+            new_xp_amount = self.resistance_xp + xp_amount 
+            if new_xp_amount > self.resistance_threshold: 
+                excess_xp = new_xp_amount - self.resistance_threshold 
+                self.level_up(skill)
+            self.resistance_xp = excess_xp
+        else:
+            new_xp_amount = self.magic_xp + xp_amount 
+            if new_xp_amount > self.magic_threshold: 
+                excess_xp = new_xp_amount - self.magic_threshold 
+                self.level_up(skill)
+            self.magic_xp = excess_xp 
 
-    # Method for leveling up main level and skills
-    def level_up(self, skill_or_level): # Skill can be either
-        self.skill_or_level += 1 # current level increases
-        self.skill_or_level = 0 # xp reset to 0
-        self.skill_or_level += 1 # xp threshold for next level increases
+    # Method for leveling up main level
+    def level_up(self): 
+        self.level += 1
+        self.level_xp = 0
+        self.level_up_threshold += 1
+
+    # Method for skill level increasing
+    def skill_level_up(self, skill): # skill = strength, resistance, or magic
+        if skill == "strength":
+            self.strength += 1
+            self.strength_xp = 0
+            self.strength_threshold += 1
+        elif skill == "resistance":
+            self.resistance += 1
+            self.resistance_xp = 0
+            self.resistance_threshold += 1
+        else:
+            self.magic += 1
+            self.magic_xp = 0
+            self.magic_threshold += 1
 
     # Method for taking damage
     def take_damage(self, damage):
-        self.current_health -= (damage - (self.resistance / 10)) # Factors in player's resistance
+        self.current_health -= (damage / (1 + (self.resistance / 10))) # Factors in player's resistance
     
     # Method for player death
     def player_death(self):
