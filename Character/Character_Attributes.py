@@ -32,18 +32,9 @@ class Character(ABC):
     # Method for taking damage
     def take_damage(self, damage):
         self.current_health -= (damage - (self.resistance / 10)) # Factors in player's resistance
-
-    # Method for dealing physical attacks
-    def physical_attack(self, damage):
-        return damage + (self.strength / 10)
-
-    # Method for dealing magical attacks
-    def magical_attack(self, damage):
-        return damage + (self.strength / 10)
     
     # Method for player death
     def player_death(self):
-        print("Oh s?!#, you died!")
         if self.level[1] > 0:
             print("XP reset")
             self.level[1] = 0

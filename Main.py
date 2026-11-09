@@ -61,7 +61,7 @@ def main(test_mode=False):
     player_response = None
     while True:
         # Generating and printing encounter
-        n = random.choice([1, 3, 4]) #random.randint(1, 4)
+        n = random.choice(range(1, 5)) #random.randint(1, 4)
         encounter = encounter_generator(n)
         if n != 1:
             player_traits.encounter_count += 1
@@ -70,7 +70,10 @@ def main(test_mode=False):
             print("-----------")
         else:
             print('\n-----------')
-        print(encounter)
+        if isinstance(encounter, tuple):
+            print(encounter[0])
+        else:
+            print(encounter)
         print('-----------')
         print('Your Options:')
         # Walking
@@ -96,7 +99,7 @@ def main(test_mode=False):
             while player_response not in "frq":
                 player_response = input("Enter either \'f\'(fight), \'r\'(run) or \'q\'(quit): ")
             if player_response == 'f':
-                print("-- FIGHT TIME --")
+                print("\n-- FIGHT TIME --")
                 if "Necromancer" in encounter:
                     enemy_type = "Necromancer"
                 elif "Brigand" in encounter:
@@ -139,6 +142,8 @@ def main(test_mode=False):
             while player_response == 'r' and player_inventory.gold < 10:
                 print("-----------")
                 player_response = input(f"Insufficient gold (You have {player_inventory.get_gold()} gold), enter another option: ")
+                while player_response not in "cq":
+                    player_response = input("Enter either \'c\'(continue) or \'q\'(quit): ")
             if player_response == 'r':
                 if player_traits.current_health == player_traits.health:
                     print("-----------")

@@ -4,21 +4,34 @@ import random
 def random_dict_item(dict):
         return random.choice(list(dict.items())) 
 
-class Weapon:
+class Item:
+    def __init__(self, name):
+        self.name = name
+
+    def __eq__(self, other):
+        if type(self) is type(other):
+            return self.name == other.name
+        return False
+    
+    def __hash__(self):
+        return hash(self.name)
+
+class Weapon(Item):
     def __init__(self, player_level):
         self.player_level = player_level
         name, damage_info = self.generate_weapon()
-        self.name = name
-        self.damage = damage_info
+        super().__init__(name)
+        self.damage = damage_info['Damage']
+        self.damage_type = damage_info['Damage type']
 
     def generate_weapon(self):
         # Dictionary which stores (weapon name: (damage, damage type)) where P = Physical, M = Magical
         low_level_weapons = {'Wood Sword': {
-                                'Physical Damage': 2,
-                                'Magical Damage': 1}, 
+                                'Damage': 2,
+                                'Damage type': 'P'}, 
                              'Wood Staff': {
-                                'Physical Damage': 1, 
-                                'Magical Damage': 2}
+                                'Damage': 2, 
+                                'Damage type': 'M'}
                             } 
         med_level_weapons = low_level_weapons | {
                             'Iron Sword': {
@@ -48,8 +61,15 @@ class Weapon:
     
     def get_name(self):
         return self.name
+    
+    def __eq__(self, other):
+        if isinstance(other, Weapon):
+            return self.name == other.name
         
-class Armor:
+    def __hash__(self):
+        return hash(self.name)
+        
+class Armor(Item):
     def __init__(self, player_level):
         self.player_level = player_level
         armor_name, armor_defence = self.generate_armor()
@@ -95,7 +115,14 @@ class Armor:
     def get_name(self):
         return self.name
     
-class Potion:
+    def __eq__(self, other):
+        if isinstance(other, Armor):
+            return self.name == other.name
+        
+    def __hash__(self):
+        return hash(self.name)
+    
+class Potion(Item):
     def __init__(self, player_level):
         self.player_level = player_level
         name, (restoration_amount, restoration_type) = self.generate_potion()
@@ -124,7 +151,7 @@ class Potion:
     def get_name(self):
         return self.name
     
-class Spell:
+class Spell(Item):
     def __init__(self, player_level):
         self.player_level = player_level
         name, (effect, spell_type) = self.generate_spell()

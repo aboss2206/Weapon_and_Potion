@@ -3,15 +3,11 @@ from abc import ABC, abstractmethod
 
 # Interface to outline what every enemy type should have
 class Enemy(ABC):
-    @property
-    @abstractmethod
-    def health(self) -> int:
-        pass
-
-    @property
-    @abstractmethod
-    def damage(self) -> int:
-        pass
+    def __init__(self, damage, physical_defence, magical_defence, health):
+        self.damage = damage
+        self.physical_defence = physical_defence
+        self.magical_defence = magical_defence
+        self.health = health
 
     @abstractmethod
     def attack(self):
@@ -36,51 +32,36 @@ def Enemy_factory(kind: str) -> Enemy:
         print("Unknown enemy type")
     
 class Zombie(Enemy):
-    def health() -> int:
-        return 5
-    
-    def damage() -> int:
-        return 2
+    def __init__(self):
+        super().__init__(2, 1.25, 1, 5)
 
     def attack(self):
         print("The Zombie attacks you!")
 
 class Brigand(Enemy):
-    def health() -> int:
-        return 10
-    
-    def damage() -> int:
-        return 4
+    def __init__(self):
+        super().__init__(4, 1.25, 0.75, 10)
 
     def attack(self):
         print("The Brigand strikes at you with their sword!")
 
 class Assassin(Enemy):
-    def health() -> int:
-        return 15
-
-    def damage() -> int:
-        return 6
+    def __init__(self):
+        super().__init__(6, 1, 0.75, 15)
 
     def attack(self):
         print("The Assassin lunges at you with their daggers!")
 
 class Necromancer(Enemy):
-    def health() -> int:
-        return 20
-    
-    def damage() -> int:
-        return 8
+    def __init__(self):
+        super().__init__(8, 1, 0.5, 20)
 
     def attack(self):
         print("The Necromancer casts a spell on you!")
 
 class Dragon(Enemy):
-    def health() -> int:
-        return 30
-    
-    def damage() -> int:
-        return 12
+    def __init__(self):
+        super().__init__(2, 0.5, 1.25, 5)
 
     def attack(self):
         print("The Dragon blows fire at you!")

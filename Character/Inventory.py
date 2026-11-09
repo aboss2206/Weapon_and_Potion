@@ -2,7 +2,7 @@
 from Items.Item_types import Weapon, Armor, Potion, Spell
 
 class Inventory:
-    # Dictionaries to hold the different item categories (Item name: Quantity)
+    # Dictionaries to hold the different item categories {name: quantity}
     def __init__(self):
         self.armor = {}
         self.weapons = {}
@@ -11,33 +11,32 @@ class Inventory:
         self.gold = 0
     
     # Functions for displaying each section
-    def show_armor(self):
-        print("- Armor -")
-        for key, value in self.armor.items():
-                print(f"{key} ({value})\n")
+    def get_armor(self):
+        return self.armor
             
-    def show_weapons(self):
-        print("- Weapons -")
-        for key, value in self.weapons.items():
-                print(f"{key} ({value})\n")
+    def get_weapons(self):
+        return self.weapons
 
-    def show_potions(self):
-        for key, value in self.potions.items():
-                print(f"{key} ({value})\n")
+    def get_potions(self):
+        return self.potions 
 
-    def show_spells(self):
-        for key, value in self.potions.items():
-                print(f"{key} ({value})\n")
+    def get_spells(self):
+        return self.spells
+    
+    def get_gold(self):
+        return self.gold
 
     def update_inventory(self, item_obj):
         if isinstance(item_obj, Weapon):
-            if item_obj.name in self.weapons: # If item (key) is present, the item count (value) will be incremented
+            if item_obj in self.weapons: # If item (key) is present, the item count (value) will be incremented
                 self.weapons[item_obj] += 1
             else: # Otherwise, a new entry will be added with a count of 1
                 self.weapons[item_obj] = 1
-
-    def get_gold(self):
-        return self.gold
+        elif isinstance(item_obj, Armor):
+            if item_obj in self.weapons: 
+                self.armor[item_obj] += 1
+            else: 
+                self.armor[item_obj] = 1
 
     def deposit_gold(self, amount):
         self.gold += amount
