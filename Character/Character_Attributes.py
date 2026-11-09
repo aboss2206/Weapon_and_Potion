@@ -60,6 +60,7 @@ class Character(ABC):
     # Method for taking damage
     def take_damage(self, damage):
         self.current_health -= (damage / (1 + (self.resistance / 10))) # Factors in player's resistance
+        self.add_xp("resistance", 3) # Player gets some resistance xp for taking a hit
     
     # Method for player death
     def player_death(self):

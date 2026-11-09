@@ -84,11 +84,27 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
                 applied_damage = equipped_weapon.damage * enemy.magical_defence
                 enemy.take_damage(applied_damage)
                 print(f"{applied_damage} magical damage applied to {enemy_type}!")
+        # Check if enemy died after player turn
         if enemy.health <= 0:
+            print("\n----------------------")
             print(f"Hell yeah! the {enemy_type} is dead!")
+            print("----------------------\n")
             break
 
         # Enemy Turn
         print("\n-----------")
-        print("Your Turn")
-        print("-----------")
+        print("Their Turn")
+        print("-----------\n")
+        enemy.attack()
+        print()
+        player_traits.take_damage(enemy.damage) # Resistance is factored in the function
+        print(f"Shit, you took {enemy.damage} damage!")
+        # Check if player died after enemy turn
+        if player_traits.current_health <= 0:
+            player_traits.player_death()
+            print("\n----------------")
+            print(f"Shit, you died!")
+            print("------------------\n")
+            print("- Level decreased by 1")
+            print("- Level xp reset")
+            break
