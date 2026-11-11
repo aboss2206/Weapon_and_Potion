@@ -17,23 +17,24 @@ class Character(ABC):
 
     # Method for adding xp to a certain skill
     def add_xp(self, skill, xp_amount):
+        excess_xp = 0
         if skill == "strength":
             new_xp_amount = self.strength_xp + xp_amount # Current + new xp
             if new_xp_amount > self.strength_threshold: # Checking if the player can level up
                 excess_xp = new_xp_amount - self.strength_threshold # The amount of extra xp that would go towards next level
-                self.level_up(skill)
+                self.skill_level_up(skill)
             self.strength_xp = excess_xp # Excess xp is added to new level
         elif skill == "resistance":
             new_xp_amount = self.resistance_xp + xp_amount 
             if new_xp_amount > self.resistance_threshold: 
                 excess_xp = new_xp_amount - self.resistance_threshold 
-                self.level_up(skill)
+                self.skill_level_up(skill)
             self.resistance_xp = excess_xp
         else:
             new_xp_amount = self.magic_xp + xp_amount 
             if new_xp_amount > self.magic_threshold: 
                 excess_xp = new_xp_amount - self.magic_threshold 
-                self.level_up(skill)
+                self.skill_level_up(skill)
             self.magic_xp = excess_xp 
 
     # Method for leveling up main level
@@ -58,8 +59,13 @@ class Character(ABC):
             self.magic_threshold += 1
 
     # Method for taking damage
-    def take_damage(self, damage):
-        self.current_health -= (damage / (1 + (self.resistance / 10))) # Factors in player's resistance
+    def take_damage(self, damage, damage_type, equipped_armor):
+        resistance_divisor = 1 + (self.resistance / 10)
+        if damage_type == 'P':
+            armor_divisor = 1 + (equipped_armor.physical_defence / 10)
+        else:
+            armor_divisor = 1 + (equipped_armor.magical_defence / 10)
+        self.current_health -= (damage / (resistance_divisor * armor_divisor)) # Factors in player's resistance
         self.add_xp("resistance", 3) # Player gets some resistance xp for taking a hit
     
     # Method for player death

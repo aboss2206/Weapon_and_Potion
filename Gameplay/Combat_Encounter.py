@@ -36,16 +36,25 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
     # Player selects their weapon (if they have any)
     player_weapons = player_inventory.get_weapons()
     equipped_weapon = None
+    weapon_name = ''
+    weapon_damage = 0
+    weapon_damage_type = ''
     if player_weapons:
         print("Select your weapons from the following: ")
         for weapon in player_weapons:
-            print(f"{weapon.name} (Physical Defence: {weapon.physical_defence}, Magical Defence: {weapon.magical_defence})")
+            if weapon.damage_type == 'P':
+                print(f"{weapon.name} (Attack: {weapon.damage}, Damage Type: Physical)")
+            else:
+                print(f"{weapon.name} (Attack: {weapon.damage}, Damage Type: Magical)")
         player_input = input("Select your weapon: ")
         while player_input not in [weapon.name for weapon in player_weapons]:
             player_input = input("Enter a choice from the above list: ")
         for weapon in player_weapons:
             if player_input == weapon.name:
                 equipped_weapon = weapon
+                weapon_name = equipped_weapon.name
+                weapon_damage = equipped_weapon.damage
+                weapon_damage_type = equipped_weapon.damage_type
         print("\n----------------------------")
         print(f"{equipped_weapon.name} has been equipped.")
         print("----------------------------")
@@ -57,6 +66,9 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
             print("\n---------------")
             print("Hell yeah, weapons are overrated!")
             print("---------------")
+            weapon_name = 'Fists'
+            weapon_damage = 1
+            weapon_damage_type = 'P'
         else:
             print("\nYeah, no weapons is kinda risky")
 
@@ -68,10 +80,10 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
         print("\n-----------")
         print("Your Turn")
         print("-----------")
-        print("\n'a': Attack\n'r': Run")
+        print("\n'a': Attack\n's': Cast Spell\n'p': Take Potion\n'r': Run")
         player_input = input('Enter choice: ')
-        while player_input not in 'ar':
-            player_input = input("Enter either 'a'(Attack) or 'r'(Run): ")
+        while player_input not in 'aspr':
+            player_input = input("Enter either 'a'(Attack), 's'(Spell), 'p'(Potion) or 'r'(Run): ")
         if player_input == "p":
             applied_damage = 0
             # Checking if equipped weapon does physical or magical damage
@@ -97,7 +109,7 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
         print("-----------\n")
         enemy.attack()
         print()
-        player_traits.take_damage(enemy.damage) # Resistance is factored in the function
+        player_traits.take_damage(enemy.damage, equipped_armor) # Resistance and armor is factored in the function
         print(f"Shit, you took {enemy.damage} damage!")
         # Check if player died after enemy turn
         if player_traits.current_health <= 0:
@@ -106,5 +118,5 @@ def combat_encounter(player_traits, player_inventory, enemy_type):
             print(f"Shit, you died!")
             print("------------------\n")
             print("- Level decreased by 1")
-            print("- Level xp reset")
+            print("- Level xp reset\n")
             break
